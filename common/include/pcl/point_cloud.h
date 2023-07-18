@@ -596,7 +596,7 @@ namespace pcl
       assign(InputIterator first, InputIterator last, index_t new_width)
       {
         if (new_width == 0) {
-          PCL_WARN("Assignment with new_width equal to 0,"
+          PCL_INFO("Assignment with new_width equal to 0,"
                    "setting width to size of the cloud and height to 1\n");
           return assign(std::move(first), std::move(last));
         }
@@ -638,7 +638,7 @@ namespace pcl
       inline assign(std::initializer_list<PointT> ilist, index_t new_width)
       {
         if (new_width == 0) {
-          PCL_WARN("Assignment with new_width equal to 0,"
+          PCL_INFO("Assignment with new_width equal to 0,"
                    "setting width to size of the cloud and height to 1\n");
           return assign(std::move(ilist));
         }
