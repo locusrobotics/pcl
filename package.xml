@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>libpcl-all-dev</name>
+  <version>1.13.1</version>
+  <description>The Point Cloud Library (or PCL) for point cloud processing - development
+    The PCL framework contains numerous state-of-the art algorithms including
+    filtering, feature estimation, surface reconstruction, registration, model
+    fitting and segmentation.</description>
+
+  <author>Open Perception</author>
+  <maintainer email="gservin@locusrobotics.com">Gary Servin</maintainer>
+  <license>BSD</license>
+
+  <url type="website">http://www.pointclouds.org</url>
+  <url type="bugtracker">http://dev.pointclouds.org</url>
+  <url type="repository">https://github.com/PointCloudLibrary/pcl</url>
+
+  <buildtool_depend>cmake</buildtool_depend>
+
+  <depend>boost</depend>
+  <depend>eigen</depend>
+  <depend>libflann-dev</depend>
+  <depend>libqhull</depend>
+  <depend>libusb-1.0-dev</depend>
+  <!--Commented out because it collided with other packages version-->
+  <!--depend>libvtk</depend-->
+  <depend>python3-sphinx</depend>
+
+  <exec_depend>catkin</exec_depend>
+
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+
+</package>
