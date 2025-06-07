@@ -2,6 +2,11 @@
 Changelog for package libpcl-all-dev
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Don't build on noble
+* Contributors: Gary Servin
+
 1.17.0 (2025-02-04)
 -------------------
 
