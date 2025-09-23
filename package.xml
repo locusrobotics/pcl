@@ -22,8 +22,7 @@
   <depend>libflann-dev</depend>
   <depend>libqhull</depend>
   <depend>libusb-1.0-dev</depend>
-  <!--Commented out because it collided with other packages version-->
-  <!--depend>libvtk</depend-->
+  <depend>libvtk-qt</depend>
   <depend>python3-sphinx</depend>
 
   <exec_depend>catkin</exec_depend>
