@@ -2,8 +2,8 @@
 Changelog for package libpcl-all-dev
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.19.0 (2025-09-30)
+-------------------
 * Add libvtk-qt as a dependency
 * Contributors: Bianca Bendris
 
