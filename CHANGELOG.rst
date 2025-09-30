@@ -2,6 +2,11 @@
 Changelog for package libpcl-all-dev
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add libvtk-qt as a dependency
+* Contributors: Bianca Bendris
+
 1.18.0 (2025-06-06)
 -------------------
 * Don't build on noble
