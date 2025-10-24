@@ -1,19 +1,6 @@
 ### ---[ PCL global CMake
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
-# Check which version of ubuntu we are running
-find_program(LSB_RELEASE_EXEC lsb_release)
-execute_process(COMMAND ${LSB_RELEASE_EXEC} --codename --short
-    OUTPUT_VARIABLE OS_CODENAME
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
-# Exit if we're not building on jammy
-if (NOT OS_CODENAME STREQUAL "jammy")
-  message(STATUS "Detected Ubuntu version different than jammy, not building this package ")
-  return()
-endif()
-
 if(POLICY CMP0074)
   # 1. Remove with 3.12.4.
   # 2. Remove search paths with *_ROOT since they will be automatically checked
