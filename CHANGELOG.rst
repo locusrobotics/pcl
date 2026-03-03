@@ -2,8 +2,8 @@
 Changelog for package libpcl-all-dev
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.20.0 (2026-03-03)
+-------------------
 * Build pcl on noble
 * Contributors: Gary Servin
 
