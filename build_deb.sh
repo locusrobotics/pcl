@@ -62,7 +62,7 @@ Section: libs
 Priority: optional
 Architecture: $(dpkg --print-architecture)
 Installed-Size: ${INSTALLED_SIZE}
-Depends: libboost-all-dev, libeigen3-dev, libflann-dev, libqhull-dev, libusb-1.0-0-dev, libopenni2-0
+Depends: libboost-all-dev, libeigen3-dev, libflann-dev, libqhull-dev, libusb-1.0-0-dev, libopenni2-0, libopenni0, libvtk9.1
 Maintainer: Gary Servin <gservin@locusrobotics.com>
 Description: Point Cloud Library (PCL) - development files
  The PCL framework contains numerous state-of-the-art algorithms including
