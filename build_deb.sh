@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# Build PCL as a Debian package installing libraries to /usr/local
+# Build PCL as a Debian package.
+# The install prefix defaults to /usr but can be overridden via INSTALL_PREFIX env var.
 #
 set -e
 
@@ -8,12 +9,11 @@ PKG_NAME="libpcl-all-dev"
 PKG_VERSION="1.13.1"
 PKG_RELEASE="1"
 UBUNTU_CODENAME="$(lsb_release -cs)"
-INSTALL_PREFIX="/usr/local"
+INSTALL_PREFIX="${INSTALL_PREFIX:-/usr}"
 JOBS=$(nproc)
 
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_DIR="${SRC_DIR}/build_deb"
-INSTALL_DIR="${BUILD_DIR}/install"
 DEB_ROOT="${BUILD_DIR}/deb_root"
 
 echo "=== Building PCL Debian package ==="
@@ -24,7 +24,7 @@ echo ""
 
 # Clean previous build
 rm -rf "${BUILD_DIR}"
-mkdir -p "${BUILD_DIR}" "${INSTALL_DIR}" "${DEB_ROOT}"
+mkdir -p "${BUILD_DIR}" "${DEB_ROOT}"
 
 # Configure
 echo "--- Configuring ---"
@@ -62,7 +62,7 @@ Section: libs
 Priority: optional
 Architecture: $(dpkg --print-architecture)
 Installed-Size: ${INSTALLED_SIZE}
-Depends: libboost-all-dev, libeigen3-dev, libflann-dev, libqhull-dev, libusb-1.0-0-dev, libopenni2-0, libopenni0, libvtk9.1
+Depends: libboost-all-dev, libeigen3-dev, libflann-dev, libqhull-dev, libusb-1.0-0-dev, libopenni2-0, libopenni0
 Maintainer: Gary Servin <gservin@locusrobotics.com>
 Description: Point Cloud Library (PCL) - development files
  The PCL framework contains numerous state-of-the-art algorithms including
@@ -79,17 +79,13 @@ EOF
 cat > "${DEB_ROOT}/DEBIAN/postinst" <<'EOF'
 #!/bin/sh
 set -e
-if [ "$1" = "configure" ]; then
-    ldconfig
-fi
+#DEBHELPER#
 EOF
 
 cat > "${DEB_ROOT}/DEBIAN/postrm" <<'EOF'
 #!/bin/sh
 set -e
-if [ "$1" = "remove" ]; then
-    ldconfig
-fi
+#DEBHELPER#
 EOF
 
 chmod 755 "${DEB_ROOT}/DEBIAN/postinst" "${DEB_ROOT}/DEBIAN/postrm"
@@ -101,7 +97,7 @@ echo "${INSTALL_PREFIX}/lib" > "${DEB_ROOT}/etc/ld.so.conf.d/pcl.conf"
 # Build the .deb
 echo "--- Building .deb package ---"
 DEB_FILE="${BUILD_DIR}/${PKG_NAME}_${PKG_VERSION}-${PKG_RELEASE}+${UBUNTU_CODENAME}_$(dpkg --print-architecture).deb"
-dpkg-deb --build "${DEB_ROOT}" "${DEB_FILE}"
+dpkg-deb --root-owner-group --build "${DEB_ROOT}" "${DEB_FILE}"
 
 echo ""
 echo "=== Done ==="

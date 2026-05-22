@@ -56,8 +56,12 @@ jobs:
           JFROG_API_KEY: ${{ secrets.JFROG_API_KEY }}
         run: |
           DEB_FILE=$(find build_deb -name '*.deb' | head -1)
+          if [ -z "${DEB_FILE}" ]; then
+            echo "Error: no .deb file found in build_deb/" >&2
+            exit 1
+          fi
           DEB_BASENAME=$(basename "${DEB_FILE}")
-          echo "Uploading ${DEB_BASENAME} to ${JFROG_REPO} (${matrix_dist}/${matrix_comp})"
+          echo "Uploading ${DEB_BASENAME} to ${JFROG_REPO} (${{ matrix.distribution }}/${{ matrix.component }})"
 
           curl -f -u "${JFROG_USER}:${JFROG_API_KEY}" \
             -XPUT "${JFROG_URL}/${JFROG_REPO}/pool/libpcl/${DEB_BASENAME};deb.distribution=${{ matrix.distribution }};deb.component=${{ matrix.component }};deb.architecture=$(dpkg --print-architecture)" \
