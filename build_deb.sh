@@ -31,7 +31,10 @@ echo "--- Configuring ---"
 cmake -S "${SRC_DIR}" -B "${BUILD_DIR}" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-    -DCMAKE_CXX_STANDARD=14 \
+    -DCMAKE_CXX_FLAGS='-O3 -g1 -DNDEBUG -march=haswell -fext-numeric-literals -DBOOST_BIND_GLOBAL_PLACEHOLDERS -DBOOST_ALLOW_DEPRECATED_HEADERS' \
+    -DCMAKE_CXX_STANDARD='17' \
+    -DCMAKE_CXX_STANDARD_REQUIRED='ON' \
+    -DCMAKE_CXX_EXTENSIONS='ON' \
     -DBUILD_tools=OFF \
     -DBUILD_examples=OFF \
     -DBUILD_apps=OFF \
