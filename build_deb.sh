@@ -5,12 +5,31 @@
 #
 set -e
 
+usage() {
+    echo "Usage: $0 [-j|--jobs <N>]"
+    echo ""
+    echo "  -j, --jobs <N>   Number of parallel compile jobs (default: all cores via nproc)"
+    echo "                   Can also be set via the JOBS environment variable."
+    exit 1
+}
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -j|--jobs)
+            [[ -z "${2:-}" || ! "${2}" =~ ^[1-9][0-9]*$ ]] && { echo "Error: --jobs requires a positive integer"; usage; }
+            JOBS="$2"; shift 2 ;;
+        -h|--help) usage ;;
+        *) echo "Unknown option: $1"; usage ;;
+    esac
+done
+
 PKG_NAME="libpcl-all-dev"
 PKG_VERSION="1.13.1"
 PKG_RELEASE="1"
 UBUNTU_CODENAME="$(lsb_release -cs)"
 INSTALL_PREFIX="${INSTALL_PREFIX:-/usr}"
-JOBS=$(nproc)
+JOBS="${JOBS:-$(nproc)}"
 
 SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_DIR="${SRC_DIR}/build_deb"
