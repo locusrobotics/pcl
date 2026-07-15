@@ -35,9 +35,19 @@ SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_DIR="${SRC_DIR}/build_deb"
 DEB_ROOT="${BUILD_DIR}/deb_root"
 
+# Architecture-specific compiler tuning.
+# -march=haswell is an x86-64 microarchitecture and is invalid on other
+# architectures (e.g. arm64), so only apply it when building for amd64.
+DEB_ARCH="$(dpkg --print-architecture)"
+case "${DEB_ARCH}" in
+    amd64) ARCH_CXX_FLAGS='-march=haswell' ;;
+    *)     ARCH_CXX_FLAGS='' ;;
+esac
+
 echo "=== Building PCL Debian package ==="
 echo "  Source:  ${SRC_DIR}"
 echo "  Prefix:  ${INSTALL_PREFIX}"
+echo "  Arch:    ${DEB_ARCH}"
 echo "  Jobs:    ${JOBS}"
 echo ""
 
@@ -50,7 +60,7 @@ echo "--- Configuring ---"
 cmake -S "${SRC_DIR}" -B "${BUILD_DIR}" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-    -DCMAKE_CXX_FLAGS='-O3 -g1 -DNDEBUG -march=haswell -fext-numeric-literals -DBOOST_BIND_GLOBAL_PLACEHOLDERS -DBOOST_ALLOW_DEPRECATED_HEADERS' \
+    -DCMAKE_CXX_FLAGS="-O3 -g1 -DNDEBUG ${ARCH_CXX_FLAGS} -fext-numeric-literals -DBOOST_BIND_GLOBAL_PLACEHOLDERS -DBOOST_ALLOW_DEPRECATED_HEADERS" \
     -DCMAKE_CXX_STANDARD='17' \
     -DCMAKE_CXX_STANDARD_REQUIRED='ON' \
     -DCMAKE_CXX_EXTENSIONS='ON' \
